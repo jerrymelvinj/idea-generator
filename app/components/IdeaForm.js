@@ -32,7 +32,7 @@ export default function IdeaForm({ onIdeaAdded }) {
   };
 
   return (
-    <form className="idea-form glass-panel" onSubmit={handleSubmit}>
+    <form className="idea-form" onSubmit={handleSubmit}>
       <textarea
         className="idea-input"
         placeholder="Type your thoughts here... The AI Typist will organize them."

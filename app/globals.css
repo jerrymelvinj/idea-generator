@@ -143,24 +143,10 @@ h3 { font-size: 1.25rem; font-weight: 400; }
 
 /* Form Section */
 .idea-form {
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border-top: 1px solid var(--panel-border);
-  border-bottom: 1px solid var(--panel-border);
-  position: relative;
-}
-.idea-form::before {
-  content: 'INSERT PAPER HERE';
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-color);
-  padding: 0 10px;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  margin-bottom: 1rem;
 }
 
 .idea-input {

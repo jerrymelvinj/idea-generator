@@ -3,6 +3,7 @@ import { Tag, Trash2, FolderOpen, Edit2, Save, X, RotateCcw } from 'lucide-react
 
 export default function IdeaCard({ idea, onDelete, onUpdate, isTrashView, onRestore, onPermanentDelete }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(idea.title || '');
   const [category, setCategory] = useState(idea.category || '');
   const [tagsInput, setTagsInput] = useState((idea.tags || []).join(', '));
   const [isSaving, setIsSaving] = useState(false);
@@ -16,7 +17,7 @@ export default function IdeaCard({ idea, onDelete, onUpdate, isTrashView, onRest
       const res = await fetch('/api/ideas', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: idea.id, category, tags })
+        body: JSON.stringify({ id: idea.id, title, category, tags })
       });
       
       if (res.ok) {
@@ -47,6 +48,16 @@ export default function IdeaCard({ idea, onDelete, onUpdate, isTrashView, onRest
     return (
       <div className="idea-card fade-in edit-mode">
         <div className="edit-form-group">
+          <label>Title</label>
+          <input 
+            type="text" 
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)}
+            className="edit-input"
+            style={{ fontWeight: 'bold' }}
+          />
+        </div>
+        <div className="edit-form-group">
           <label>Category</label>
           <input 
             type="text" 
@@ -65,8 +76,7 @@ export default function IdeaCard({ idea, onDelete, onUpdate, isTrashView, onRest
           />
         </div>
         
-        <h3 className="idea-title" style={{marginTop: '1rem', opacity: 0.7}}>{idea.title}</h3>
-        <p className="idea-content" style={{opacity: 0.7}}>{idea.content}</p>
+        <p className="idea-content" style={{opacity: 0.7, marginTop: '1rem'}}>{idea.content}</p>
         
         <div className="edit-actions">
           <button className="retro-btn" onClick={() => setIsEditing(false)}>

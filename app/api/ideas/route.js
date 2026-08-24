@@ -42,7 +42,7 @@ export async function POST(request) {
 export async function PUT(request) {
   try {
     const body = await request.json();
-    const { id, category, tags, action } = body;
+    const { id, title, category, tags, action } = body;
 
     if (!id) {
       return Response.json({ error: 'ID is required' }, { status: 400 });
@@ -53,7 +53,7 @@ export async function PUT(request) {
       return Response.json(restoredIdea);
     }
 
-    const updatedIdea = updateIdea(id, { category, tags });
+    const updatedIdea = updateIdea(id, { title, category, tags });
     return Response.json(updatedIdea);
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
