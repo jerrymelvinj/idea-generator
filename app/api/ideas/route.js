@@ -6,7 +6,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const trash = searchParams.get('trash') === 'true' ? 1 : 0;
     
-    const ideas = getIdeas(trash);
+    const ideas = await getIdeas(trash);
     return Response.json(ideas);
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
@@ -26,7 +26,7 @@ export async function POST(request) {
     const aiData = await categorizeIdea(content);
 
     // Save to database
-    const newIdea = createIdea({
+    const newIdea = await createIdea({
       content,
       title: aiData.title,
       category: aiData.category,
@@ -49,11 +49,11 @@ export async function PUT(request) {
     }
 
     if (action === 'restore') {
-      const restoredIdea = restoreIdea(id);
+      const restoredIdea = await restoreIdea(id);
       return Response.json(restoredIdea);
     }
 
-    const updatedIdea = updateIdea(id, { title, category, tags });
+    const updatedIdea = await updateIdea(id, { title, category, tags });
     return Response.json(updatedIdea);
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
@@ -71,9 +71,9 @@ export async function DELETE(request) {
     }
 
     if (permanent) {
-      permanentlyDeleteIdea(id);
+      await permanentlyDeleteIdea(id);
     } else {
-      deleteIdea(id);
+      await deleteIdea(id);
     }
     
     return Response.json({ success: true });
